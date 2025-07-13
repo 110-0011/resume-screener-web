@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results</title>
+</head>
+<body>
+    <h1>Scoring Results</h1>
+    <ul>
+        {% for result in results %}
+            <li><strong>{{ result.name }}</strong>: {{ result.score }}/10</li>
+        {% endfor %}
+    </ul>
+    <a href="/">Back</a>
+</body>
+</html>
