@@ -9,12 +9,43 @@
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center mb-8">CampusScreener – Resume Screening</h1>
 
+        {% if error %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <strong>Error:</strong> {{ error }}
+        </div>
+        {% endif %}
+
         <!-- Upload Form -->
         <form id="uploadForm" enctype="multipart/form-data" method="POST" class="bg-white p-6 rounded shadow-md mb-8">
+            <label class="block mb-4 text-gray-700 font-semibold">Job Description:</label>
+            <textarea name="job_description" rows="4" placeholder="Paste job description here..."
+                      class="mb-4 block w-full text-sm text-gray-700 border rounded p-2" required></textarea>
+
+            <label class="block mb-4 text-gray-700 font-semibold">Upload Resumes (PDF only):</label>
+            <input type="file" id="resumeUpload" name="resumes" multiple accept=".pdf"
+                   class="mb-4 block w-full text-sm text-gray-700 border rounded p-2">
+
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded">
+                Upload & Screen
+            </button>
+        </form>
+
+
+        <!-- Upload Form -->
+        <!-- <form id="uploadForm" enctype="multipart/form-data" method="POST" class="bg-white p-6 rounded shadow-md mb-8">
             <label class="block mb-4 text-gray-700 font-semibold">Upload Resumes (PDF only):</label>
             <input type="file" id="resumeUpload" name="resumes" multiple accept=".pdf" class="mb-4 block w-full text-sm text-gray-700 border rounded p-2">
             <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded">Upload & Screen</button>
-        </form>
+        </form> -->
+
+        {% if results %}
+        <div class="bg-white p-4 rounded shadow mb-4">
+            <h3 class="text-lg font-bold text-gray-800 mb-2">Job Description Used:</h3>
+            <p class="text-sm text-gray-700 whitespace-pre-line">{{ job_description }}</p>
+        </div>
+        {% endif %}
+
 
         <!-- Results Table -->
         {% if results %}
@@ -56,9 +87,18 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                {% if results %}
+                <div class="mt-4">
+                    <a href="{{ url_for('export_excel') }}" 
+                       class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded">
+                       Export Results to Excel
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endif %}
     </div>
+        
 </body>
 </html>
